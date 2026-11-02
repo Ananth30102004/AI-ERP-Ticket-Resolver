@@ -142,5 +142,3 @@ streamlit run app.py
 ---
 
 **Built with Python | RAG | Ollama | ChromaDB | Streamlit**
-
-GitHub: [Repository Link]
