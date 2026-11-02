@@ -1,0 +1,17 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+.env
+
+# ChromaDB generated files
+erp_vector_db/
+
+
+
+# Editor and operating system files
+.vscode/
+.DS_Store
+Thumbs.db

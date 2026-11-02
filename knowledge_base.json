@@ -1,0 +1,911 @@
+[
+    {
+        "ticket": "A supplier invoice is on hold because the billed quantity is greater than the quantity received on the purchase order.",
+        "Module": "accounts payable",
+        "Category": "Invoice validation hold",
+        "Complexity": "medium",
+        "Root_Cause": "The invoice quantity exceeds the recorded receipt quantity. The receipt for some goods may not yet have been entered.",
+        "Steps": [
+            "Possible cause: The invoice quantity exceeds the recorded receipt quantity.",
+            "Possible cause: The receipt for some goods may not yet have been entered.",
+            "Review the invoice hold details and compare billed, ordered, and received quantities.",
+            "Check whether the missing goods receipt has been recorded in Purchasing.",
+            "Correct the invoice or record the valid receipt, then rerun invoice validation.",
+            "Functional perspective: Business process: three-way matching compares the supplier invoice with the purchase order and receipt. The business user should establish whether goods were actually received and whether the invoice quantity is contractually correct.",
+            "Application/technical perspective: Application checks: inspect invoice holds and matching details in Payables; compare ordered, received, and invoiced quantities. If receipt data came from an integration, check its import/processing status before changing the invoice.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "How Invoices Are Validated — https://docs.oracle.com/en/cloud/saas/financials/26d/fappp/how-invoices-are-validated.html"
+    },
+    {
+        "ticket": "Invoice validation places a price hold because the supplier invoice unit price is higher than the purchase order price.",
+        "Module": "accounts payable",
+        "Category": "Invoice price variance",
+        "Complexity": "medium",
+        "Root_Cause": "The invoice price differs from the purchase order schedule price. The invoice or purchase order may need an authorized correction.",
+        "Steps": [
+            "Possible cause: The invoice price differs from the purchase order schedule price.",
+            "Possible cause: The invoice or purchase order may need an authorized correction.",
+            "Compare the invoice unit price with the purchase order schedule price.",
+            "Review the applicable price tolerance and the hold details.",
+            "Correct the invoice, purchase order, or price correction as appropriate, then validate again.",
+            "Functional perspective: Business process: invoice price matching checks the invoiced price against the purchasing document and configured tolerances. A price difference may require an approved PO change or a corrected invoice.",
+            "Application/technical perspective: Application checks: inspect the price-related hold and invoice/PO schedule values in Payables and Purchasing. Review applicable tolerance setup with an authorized functional administrator; do not bypass a hold without approval.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "How Invoices Are Validated — https://docs.oracle.com/en/cloud/saas/financials/26d/fappp/how-invoices-are-validated.html"
+    },
+    {
+        "ticket": "An invoice cannot be accounted because an invoice distribution account is invalid.",
+        "Module": "accounts payable",
+        "Category": "Invalid distribution account",
+        "Complexity": "high",
+        "Root_Cause": "The distribution combination may be invalid or inactive. The account setup may not permit the distribution.",
+        "Steps": [
+            "Possible cause: The distribution combination may be invalid or inactive.",
+            "Possible cause: The account setup may not permit the distribution.",
+            "Open the invoice hold details and identify the account-related hold.",
+            "Verify the distribution account combination and its validity for the transaction.",
+            "Correct the account setup or distribution, then rerun invoice validation; escalate to the finance configuration owner if needed.",
+            "Functional perspective: Business process: invoice accounting depends on valid distributions and account combinations. The finance team must confirm the intended expense, liability, project, or other account treatment.",
+            "Application/technical perspective: Application checks: inspect the distribution and accounting error details. Verify account combination validity, enabled status, effective dates, and relevant cross-validation rules with the GL/configuration owner.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Types of Holds — https://docs.oracle.com/en/cloud/saas/financials/26d/fappp/types-of-holds.html"
+    },
+    {
+        "ticket": "Invoice validation places a funds hold on an invoice even though the invoice data appears complete.",
+        "Module": "accounts payable",
+        "Category": "Funds hold",
+        "Complexity": "high",
+        "Root_Cause": "Available budget may be lower than the requested amount. The budget date may not be in an open period. A budget or account assignment may be missing.",
+        "Steps": [
+            "Possible cause: Available budget may be lower than the requested amount.",
+            "Possible cause: The budget date may not be in an open period.",
+            "Possible cause: A budget or account assignment may be missing.",
+            "Review the exact funds-hold reason in the invoice details.",
+            "Check available funds and the invoice budget date/accounting period.",
+            "Verify budget and account assignments with the budget owner, then correct the cause and rerun validation.",
+            "Functional perspective: Business process: budgetary control can prevent an invoice from proceeding when funds are unavailable or the transaction is not eligible for funds reservation.",
+            "Application/technical perspective: Application checks: read the exact funds-hold details; verify budget date, account, funds status, and accounting period. Confirm the appropriate budget adjustment or override approval process rather than manually bypassing controls.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Why does this invoice have a funds hold? — https://docs.oracle.com/en/cloud/saas/financials/26c/fappp/why-does-this-invoice-have-a-funds-hold.html"
+    },
+    {
+        "ticket": "An invoice is held because the tax amount does not match the expected tax calculation.",
+        "Module": "accounts payable",
+        "Category": "Invoice tax variance",
+        "Complexity": "medium",
+        "Root_Cause": "The tax rate or tax code on the invoice may be incorrect. The tax amount may exceed configured tolerance.",
+        "Steps": [
+            "Possible cause: The tax rate or tax code on the invoice may be incorrect.",
+            "Possible cause: The tax amount may exceed configured tolerance.",
+            "Review the tax code, taxable status, and calculated tax on the invoice lines.",
+            "Compare invoice tax details with the purchase order and applicable tax configuration.",
+            "Correct the tax details or refer the issue to the tax configuration team, then rerun validation.",
+            "Functional perspective: Business process: tax calculation depends on transaction attributes, tax rules, tax classification, and the applicable jurisdiction. Tax changes should be reviewed by an authorized tax specialist.",
+            "Application/technical perspective: Application checks: inspect invoice tax lines and tax determinants, compare with the PO and supplier/site data, and review tax calculation errors. Escalate rule or configuration changes to the tax administrator.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Types of Holds — https://docs.oracle.com/en/cloud/saas/financials/26d/fappp/types-of-holds.html"
+    },
+    {
+        "ticket": "A customer payment is recorded in Receivables, but it is not reducing the customer's open invoice balance.",
+        "Module": "accounts receivable",
+        "Category": "Unapplied customer receipt",
+        "Complexity": "medium",
+        "Root_Cause": "The receipt may still be unapplied. The receipt may not have been matched to the intended customer transaction.",
+        "Steps": [
+            "Possible cause: The receipt may still be unapplied.",
+            "Possible cause: The receipt may not have been matched to the intended customer transaction.",
+            "Review the receipt status and amount applied.",
+            "Use receipt details and the Unapplied Receipts Register to identify unapplied or unidentified cash.",
+            "Confirm the correct customer and invoice before applying the receipt.",
+            "Functional perspective: Business process: a receipt must be identified and applied to the correct open customer transaction to reduce the receivable balance.",
+            "Application/technical perspective: Application checks: inspect receipt status, application details, remittance references, and the Unapplied Receipts Register. Confirm customer and invoice identity before applying cash.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Unapplied Receipts Register — https://docs.oracle.com/en/cloud/saas/financials/25d/faofc/unapplied-receipts-register.html"
+    },
+    {
+        "ticket": "A customer says their payment was applied to the wrong invoice in Oracle Receivables.",
+        "Module": "accounts receivable",
+        "Category": "Receipt applied to wrong invoice",
+        "Complexity": "high",
+        "Root_Cause": "The receipt may have been applied to an incorrect transaction. The intended invoice and customer details may not have been verified during application.",
+        "Steps": [
+            "Possible cause: The receipt may have been applied to an incorrect transaction.",
+            "Possible cause: The intended invoice and customer details may not have been verified during application.",
+            "Review the receipt application details and identify the transaction currently linked to the receipt.",
+            "Confirm the correct customer, invoice number, currency, and amount with supporting remittance information.",
+            "Follow the approved receipt unapplication and reapplication procedure; retain an audit trail.",
+            "Functional perspective: Business process: receipt corrections affect customer balances and audit history. Follow the organization's approval and accounting controls when reversing or reapplying cash.",
+            "Application/technical perspective: Application checks: review the receipt's application history and transaction identifiers. Use supported unapply/reapply actions and verify the resulting balances and accounting impact.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Receipt-to-Receipt Applications — https://docs.oracle.com/en/cloud/saas/financials/26d/faofc/receipt-to-receipt-applications.html"
+    },
+    {
+        "ticket": "A bank receipt was imported, but the customer account cannot be identified.",
+        "Module": "accounts receivable",
+        "Category": "Unidentified receipt",
+        "Complexity": "medium",
+        "Root_Cause": "The remittance information may be missing or insufficient. The receipt may not have been matched to a customer account.",
+        "Steps": [
+            "Possible cause: The remittance information may be missing or insufficient.",
+            "Possible cause: The receipt may not have been matched to a customer account.",
+            "Review receipt details, remittance references, and the receipt batch.",
+            "Use the Unapplied Receipts Register to review unidentified receipts.",
+            "Confirm the payer using approved remittance or bank evidence before assigning the receipt to a customer.",
+            "Functional perspective: Business process: unidentified cash should not be assigned to a customer until reliable remittance or bank evidence identifies the payer.",
+            "Application/technical perspective: Application checks: review receipt method, bank/remittance references, customer search results, and unapplied receipt reporting. Record the investigation and escalate unresolved cash to cash application.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Unapplied Receipts Register — https://docs.oracle.com/en/cloud/saas/financials/25d/faofc/unapplied-receipts-register.html"
+    },
+    {
+        "ticket": "The finance team cannot reconcile customer receipts that remain unapplied at period close.",
+        "Module": "accounts receivable",
+        "Category": "Receipt reconciliation",
+        "Complexity": "medium",
+        "Root_Cause": "Receipts may remain unapplied, on-account, or unidentified. Receipt applications may not have been reviewed by business unit or accounting period.",
+        "Steps": [
+            "Possible cause: Receipts may remain unapplied, on-account, or unidentified.",
+            "Possible cause: Receipt applications may not have been reviewed by business unit or accounting period.",
+            "Run the Unapplied Receipts Register for the relevant business unit and accounting period.",
+            "Review unapplied, on-account, and unidentified receipt totals.",
+            "Research each material item and reconcile with approved bank and customer records.",
+            "Functional perspective: Business process: period-end reconciliation requires unapplied and unidentified cash to be investigated and reported according to finance policy.",
+            "Application/technical perspective: Application checks: run the Unapplied Receipts Register for the relevant business unit and period, reconcile totals to bank and subledger records, and investigate material unmatched items.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Unapplied Receipts Register — https://docs.oracle.com/en/cloud/saas/financials/25d/faofc/unapplied-receipts-register.html"
+    },
+    {
+        "ticket": "A user cannot apply one open receipt against another open receipt to move funds between receipts.",
+        "Module": "accounts receivable",
+        "Category": "Receipt-to-receipt application failure",
+        "Complexity": "high",
+        "Root_Cause": "The receipts may not be in the same currency. The required clearing account may not be configured for Payment Netting.",
+        "Steps": [
+            "Possible cause: The receipts may not be in the same currency.",
+            "Possible cause: The required clearing account may not be configured for Payment Netting.",
+            "Confirm both receipts are open and have unapplied or on-account cash.",
+            "Verify that both receipts use the same currency.",
+            "Check the Payment Netting clearing-account setup with the Receivables configuration owner.",
+            "Functional perspective: Business process: receipt-to-receipt applications are controlled cash-management transactions and depend on supported currency and clearing-account conditions.",
+            "Application/technical perspective: Application checks: confirm receipt statuses and currencies, review Payment Netting setup and clearing-account configuration, and inspect any application error details before retrying.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Receipt-to-Receipt Applications — https://docs.oracle.com/en/cloud/saas/financials/26d/faofc/receipt-to-receipt-applications.html"
+    },
+    {
+        "ticket": "A requisition is submitted, but the expected approver does not appear in the approval hierarchy.",
+        "Module": "purchasing",
+        "Category": "Requisition approval routing",
+        "Complexity": "high",
+        "Root_Cause": "Approval rules or approver hierarchy may not match the document attributes. The approval configuration may need diagnostic review.",
+        "Steps": [
+            "Possible cause: Approval rules or approver hierarchy may not match the document attributes.",
+            "Possible cause: The approval configuration may need diagnostic review.",
+            "Review the requisition status and approval history.",
+            "Run the Requisition Approval - Validate diagnostic test if the user has the required role.",
+            "Check the approver hierarchy and approval rules with the procurement configuration owner.",
+            "Functional perspective: Business process: requisition approval routing depends on the organization's approval policy, hierarchy, amount thresholds, and document attributes.",
+            "Application/technical perspective: Application checks: review approval history and use the Requisition Approval - Validate diagnostic when available to the assigned role. Inspect rules and hierarchy in the procurement approval setup.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Document Approvals in Procurement — https://docs.oracle.com/en/cloud/saas/procurement/25d/oapro/document-approvals-in-procurement.html"
+    },
+    {
+        "ticket": "A purchase order is not routed to the expected approver after submission.",
+        "Module": "purchasing",
+        "Category": "Purchase order approval workflow",
+        "Complexity": "high",
+        "Root_Cause": "Approval rules may evaluate header, line, schedule, distribution, or requisition attributes. The configured approval stages or rules may not match the purchase order.",
+        "Steps": [
+            "Possible cause: Approval rules may evaluate header, line, schedule, distribution, or requisition attributes.",
+            "Possible cause: The configured approval stages or rules may not match the purchase order.",
+            "Review the document type and approval status.",
+            "Check attributes used by approval rules, including amount, category, requester, cost center, and delivery details where applicable.",
+            "Ask the procurement administrator to review Manage Purchasing Document Approvals and the applicable rules.",
+            "Functional perspective: Business process: purchase orders route to approvers based on configured rules and attributes such as amount, category, requester, and delivery details.",
+            "Application/technical perspective: Application checks: inspect the PO approval status/history and the relevant Manage Purchasing Document Approvals rules. Verify rule conditions and deployment/configuration with the procurement administrator.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "How Purchase Order Approval Is Processed — https://docs.oracle.com/en/cloud/saas/procurement/25d/oaprc/how-purchase-order-approval-is-processed.html"
+    },
+    {
+        "ticket": "A requisition was rejected, and the requester is unsure why the approval failed.",
+        "Module": "purchasing",
+        "Category": "Requisition rejected",
+        "Complexity": "medium",
+        "Root_Cause": "An approver rejected the requisition. Approval rules or document details may need correction before resubmission.",
+        "Steps": [
+            "Possible cause: An approver rejected the requisition.",
+            "Possible cause: Approval rules or document details may need correction before resubmission.",
+            "Review the requisition's approval history and rejection comments.",
+            "Confirm the requested changes with the approver or procurement team.",
+            "Correct the requisition if required and resubmit according to the organization's approval process.",
+            "Functional perspective: Business process: a rejected requisition normally requires review of approver comments and correction of the business request before resubmission.",
+            "Application/technical perspective: Application checks: open approval history, capture rejection comments, compare the requisition with policy, then update and resubmit through the supported application workflow.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Document Approvals in Procurement — https://docs.oracle.com/en/cloud/saas/procurement/25d/oapro/document-approvals-in-procurement.html"
+    },
+    {
+        "ticket": "A purchase order change order is waiting for approval and is not progressing.",
+        "Module": "purchasing",
+        "Category": "Purchase order change approval",
+        "Complexity": "medium",
+        "Root_Cause": "The change order may be routed through configured approval rules and stages. Document attributes may cause the change order to require different approvers.",
+        "Steps": [
+            "Possible cause: The change order may be routed through configured approval rules and stages.",
+            "Possible cause: Document attributes may cause the change order to require different approvers.",
+            "Review the change order's current status and approval history.",
+            "Check the attributes used by purchasing document approval rules.",
+            "Have the procurement administrator validate the configured routing before resubmitting or changing the document.",
+            "Functional perspective: Business process: changes to an approved purchase order may require renewed approval depending on the changed fields and organizational policy.",
+            "Application/technical perspective: Application checks: inspect change-order status, approval history, changed attributes, and rules. Do not attempt to bypass the change-order approval workflow.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "How Purchase Order Approval Is Processed — https://docs.oracle.com/en/cloud/saas/procurement/25d/oaprc/how-purchase-order-approval-is-processed.html"
+    },
+    {
+        "ticket": "A supply chain flow fails to create a purchase request for a configured or back-to-back order.",
+        "Module": "purchasing",
+        "Category": "Purchase request not created",
+        "Complexity": "high",
+        "Root_Cause": "Required procurement setup such as a blanket purchase agreement may be missing. The upstream supply orchestration flow may have failed.",
+        "Steps": [
+            "Possible cause: Required procurement setup such as a blanket purchase agreement may be missing.",
+            "Possible cause: The upstream supply orchestration flow may have failed.",
+            "Review the relevant supply orchestration or configured-item exception details.",
+            "Check whether the required procurement agreement and sourcing setup exist.",
+            "Correct the setup or source-data issue and resubmit the flow using the documented process.",
+            "Functional perspective: Business process: back-to-back or supply orchestration flows may create procurement demand only when the required sourcing and procurement setup is present.",
+            "Application/technical perspective: Application checks: inspect orchestration exceptions and import logs; verify agreement, sourcing, and organization setup relevant to the flow. Retry only after correcting the diagnosed cause.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Troubleshoot Your Supply Chain Orchestration Flows — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26a/fauco/troubleshoot-your-supply-orchestration-flows.html"
+    },
+    {
+        "ticket": "An inventory transaction fails to process and displays a transaction error.",
+        "Module": "inventory",
+        "Category": "Inventory transaction processing error",
+        "Complexity": "high",
+        "Root_Cause": "The transaction manager may have returned a processing error. Transaction attributes or source data may be invalid.",
+        "Steps": [
+            "Possible cause: The transaction manager may have returned a processing error.",
+            "Possible cause: Transaction attributes or source data may be invalid.",
+            "Capture the exact error code and error explanation shown by the application.",
+            "Review the transaction's processing status and source details.",
+            "Correct the identified data or setup issue and retry only after confirming the cause.",
+            "Functional perspective: Business process: inventory transactions change stock balances and may affect reservations, costing, and downstream fulfillment. Validate the transaction source and business intent before resubmitting.",
+            "Application/technical perspective: Application checks: capture the exact error and transaction identifier; inspect transaction status, pending transactions, and scheduled-process logs. Correct invalid source data or setup before retrying.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "INV_PROCESSING_ERRORS table reference — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/oedsc/invprocessingerrors-23062.html"
+    },
+    {
+        "ticket": "A supplier invoice is held because the recorded received quantity is lower than the billed quantity.",
+        "Module": "inventory",
+        "Category": "Receipt quantity mismatch",
+        "Complexity": "medium",
+        "Root_Cause": "Some goods may not yet have been received in the system. The receipt quantity may differ from the invoice quantity.",
+        "Steps": [
+            "Possible cause: Some goods may not yet have been received in the system.",
+            "Possible cause: The receipt quantity may differ from the invoice quantity.",
+            "Compare the invoice quantity with the recorded receipt and purchase order quantities.",
+            "Confirm the physical receipt with the receiving team.",
+            "Record any valid missing receipt or correct the invoice, then rerun invoice validation.",
+            "Functional perspective: Business process: receiving records the quantity physically received; Payables matching may hold an invoice when the recorded receipt does not support the billed quantity.",
+            "Application/technical perspective: Application checks: compare PO, receipt, and invoice quantities; inspect receiving transaction status and any pending/error records. Coordinate with receiving before making quantity corrections.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "How Invoices Are Validated — https://docs.oracle.com/en/cloud/saas/financials/26d/fappp/how-invoices-are-validated.html"
+    },
+    {
+        "ticket": "A transfer supply request does not create a transfer order.",
+        "Module": "inventory",
+        "Category": "Transfer order not created",
+        "Complexity": "high",
+        "Root_Cause": "Transit times between origin and destination may be missing. The supply request import may contain data errors. Sourcing or interorganization setup may be incomplete.",
+        "Steps": [
+            "Possible cause: Transit times between origin and destination may be missing.",
+            "Possible cause: The supply request import may contain data errors.",
+            "Possible cause: Sourcing or interorganization setup may be incomplete.",
+            "Review the supply request and any exception details.",
+            "Check the Load Interface File for Import process logs if the request was imported.",
+            "Verify transit times, sourcing rules, assignment sets, and interorganization setup as applicable, then resubmit the supply line.",
+            "Functional perspective: Business process: internal transfer supply depends on valid source/destination organizations, sourcing rules, lead/transit times, and the intended fulfillment flow.",
+            "Application/technical perspective: Application checks: inspect supply orchestration exceptions and import process logs; verify transit times and sourcing assignments. If data was imported, check interface/import status before resubmitting.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Troubleshoot Your Supply Chain Orchestration Flows — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26a/fauco/troubleshoot-your-supply-orchestration-flows.html"
+    },
+    {
+        "ticket": "An inventory attribute transaction request is rejected, but the user does not know which line failed.",
+        "Module": "inventory",
+        "Category": "Inventory attribute transaction error",
+        "Complexity": "medium",
+        "Root_Cause": "A specific transaction header or line may have failed processing. The error code and explanation may identify invalid attributes or source data.",
+        "Steps": [
+            "Possible cause: A specific transaction header or line may have failed processing.",
+            "Possible cause: The error code and explanation may identify invalid attributes or source data.",
+            "Capture the process header and line identifiers if available.",
+            "Review the associated transaction error code and explanation in the supported diagnostic tools.",
+            "Correct the underlying attribute or source-data issue and resubmit the request.",
+            "Functional perspective: Business process: inventory attributes such as organization, subinventory, locator, lot, serial, and transaction quantity must satisfy the transaction's business rules.",
+            "Application/technical perspective: Application checks: identify the failed header/line and error text; inspect the relevant pending transaction and interface error details. Correct the specific invalid attribute rather than resubmitting unchanged data.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "INV_PROCESSING_ERRORS table reference — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/oedsc/invprocessingerrors-23062.html"
+    },
+    {
+        "ticket": "A sales order cannot find enough available supply from the expected warehouse.",
+        "Module": "inventory",
+        "Category": "Inventory availability issue",
+        "Complexity": "medium",
+        "Root_Cause": "Global Order Promising may not recommend sufficient supply. The applicable sourcing rule or ATP rule may not be configured as intended. Planning data may be stale.",
+        "Steps": [
+            "Possible cause: Global Order Promising may not recommend sufficient supply.",
+            "Possible cause: The applicable sourcing rule or ATP rule may not be configured as intended.",
+            "Possible cause: Planning data may be stale.",
+            "Open the order and review Check Availability and View Availability Options.",
+            "Inspect the applicable ATP rule, sourcing rule, and organization assignment.",
+            "Confirm planning data is current and escalate configuration changes to the supply planning owner.",
+            "Functional perspective: Business process: order promising depends on available supply, sourcing policy, ATP rules, and up-to-date planning information.",
+            "Application/technical perspective: Application checks: review Check Availability and supply recommendations; validate sourcing and ATP rule assignments and planning freshness. Escalate setup changes to the supply-planning owner.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Troubleshoot Supply Chain Orchestration — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26a/faims/troubleshoot-supply-chain-orchestration.html"
+    },
+    {
+        "ticket": "A sales order line fails during fulfillment, and the application recommends recovering the failed task or process.",
+        "Module": "order management",
+        "Category": "Order orchestration failure",
+        "Complexity": "high",
+        "Root_Cause": "An orchestration task or process failed. A temporary server or network issue may have interrupted processing.",
+        "Steps": [
+            "Possible cause: An orchestration task or process failed.",
+            "Possible cause: A temporary server or network issue may have interrupted processing.",
+            "Open the sales order and review the exact failed task and error message.",
+            "Use the documented recovery action for the failed task, order, or process after identifying the cause.",
+            "If the error persists, review orchestration messages and escalate to the order administrator.",
+            "Functional perspective: Business process: order orchestration coordinates fulfillment tasks. Recovery should follow the task's state and the documented business process to avoid duplicate or inconsistent actions.",
+            "Application/technical perspective: Application checks: inspect the failed orchestration task, messages, and error details on the sales order. Use supported recovery actions after addressing the underlying issue; escalate persistent failures.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Fix Errors in Sales Orders — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/fauom/fix-errors-in-sales-orders.html"
+    },
+    {
+        "ticket": "A submitted sales order cannot be assigned an orchestration process.",
+        "Module": "order management",
+        "Category": "Orchestration process not assigned",
+        "Complexity": "high",
+        "Root_Cause": "An assignment rule may reference a missing or unsuitable data set. A default orchestration process may not be configured.",
+        "Steps": [
+            "Possible cause: An assignment rule may reference a missing or unsuitable data set.",
+            "Possible cause: A default orchestration process may not be configured.",
+            "Review the order's orchestration messages and error details.",
+            "Check assignment rules and confirm that the required data set and default process are configured.",
+            "Ask the order administrator to correct the rules and retry processing.",
+            "Functional perspective: Business process: every eligible order line must match an appropriate orchestration assignment and deployed process to proceed through fulfillment.",
+            "Application/technical perspective: Application checks: review orchestration messages, assignment-rule conditions, referenced data sets, and process deployment status. Ask an authorized administrator to correct configuration and retry.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Using Order Management — Troubleshoot Problems and Improve Performance — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26a/fauom/using-order-management.pdf"
+    },
+    {
+        "ticket": "Order Management reports that it cannot connect to an external source system or connector.",
+        "Module": "order management",
+        "Category": "Source system connection failure",
+        "Complexity": "high",
+        "Root_Cause": "The configured connector URL may be incorrect. The connector service may be unavailable or a transient network problem may have occurred.",
+        "Steps": [
+            "Possible cause: The configured connector URL may be incorrect.",
+            "Possible cause: The connector service may be unavailable or a transient network problem may have occurred.",
+            "Open Manage Order Orchestration Messages and search for Send Event Notification entries.",
+            "Compare the logged URL with the configured Connector URL.",
+            "Verify the connector service on the source system and check again after a short wait; escalate persistent failures to integration support.",
+            "Functional perspective: Business process: external-system integration failures can interrupt fulfillment updates; retries should follow the ownership and recovery rules of the integration.",
+            "Application/technical perspective: Application checks: inspect orchestration messages and connector URL/configuration, confirm service availability and authentication, and review integration monitoring logs. Avoid retrying from a second system if Oracle's recovery guidance says to retry in Order Management.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Fix Connection Problems with Source Systems — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/faiom/fix-connection-problems-with-source-systems.html"
+    },
+    {
+        "ticket": "A sales order cannot be fulfilled because Global Order Promising did not create a supply recommendation.",
+        "Module": "order management",
+        "Category": "Supply recommendation missing",
+        "Complexity": "high",
+        "Root_Cause": "ATP or sourcing rules may not identify suitable supply. The work definition may contain errors for a configured item. Planning data may not reflect the latest setup.",
+        "Steps": [
+            "Possible cause: ATP or sourcing rules may not identify suitable supply.",
+            "Possible cause: The work definition may contain errors for a configured item.",
+            "Possible cause: Planning data may not reflect the latest setup.",
+            "Review Check Availability and the available supply recommendations for the order line.",
+            "Verify applicable ATP rules, sourcing rules, and organization assignments.",
+            "Review work definition errors for configured items and collect current planning data as appropriate.",
+            "Functional perspective: Business process: order promising recommends supply based on sourcing, ATP rules, inventory availability, and applicable configuration for the item.",
+            "Application/technical perspective: Application checks: inspect availability details and sourcing/ATP assignments; verify planning data and configured-item work definition errors where applicable. Capture the order line and error details for escalation.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Troubleshoot Supply Chain Orchestration — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26a/faims/troubleshoot-supply-chain-orchestration.html"
+    },
+    {
+        "ticket": "An imported sales order is not created in Order Management even though the import file was submitted.",
+        "Module": "order management",
+        "Category": "Order import failure",
+        "Complexity": "medium",
+        "Root_Cause": "The Load Interface File for Import process may have data errors. The required Import Sales Orders scheduled process may not have run.",
+        "Steps": [
+            "Possible cause: The Load Interface File for Import process may have data errors.",
+            "Possible cause: The required Import Sales Orders scheduled process may not have run.",
+            "Review the Load Interface File for Import process log and correct reported data errors.",
+            "Confirm that the Import Sales Orders scheduled process was run for the relevant data.",
+            "Reprocess the corrected import and verify the resulting order status.",
+            "Functional perspective: Business process: imported sales orders must pass data validation and the import process before users can fulfill them.",
+            "Application/technical perspective: Application checks: review import process logs and interface errors, confirm the required Import Sales Orders process ran, correct invalid records, and verify the created order status after reprocessing.",
+            "Triage question: What exact error message or hold reason is displayed?",
+            "Triage question: What transaction or document number and status are affected?",
+            "Triage question: Did this work previously, and did anything change recently?",
+            "Escalation guidance: Escalate to the relevant functional owner if business rules, approval policy, tax, accounting, or setup changes are required; escalate to application/integration support if logs indicate processing, access, service, import, or integration failures. Include the error text, transaction ID, timestamp, and steps already tried."
+        ],
+        "source": "Troubleshoot Your Supply Chain Orchestration Flows — https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26a/fauco/troubleshoot-your-supply-orchestration-flows.html"
+    },
+    {
+        "ticket": "Payables Open Interface Import rejects an invoice because the supplier or supplier site is missing.",
+        "Module": "accounts payable",
+        "Category": "Invoice import rejected",
+        "Complexity": "medium",
+        "Root_Cause": "The supplier/site reference may be invalid or not defined for the relevant operating unit.",
+        "Steps": [
+            "Possible cause: The supplier/site reference may be invalid or not defined for the relevant operating unit.",
+            "Confirm the supplier and supplier site are valid and enabled for the transaction's operating unit; correct the source data and rerun Payables Open Interface Import.",
+            "Review the Payables Open Interface Import report and request log; inspect rejected interface records and correct them using supported Payables windows or the source integration.",
+            "Functional perspective: Confirm the supplier and supplier site are valid and enabled for the transaction's operating unit; correct the source data and rerun Payables Open Interface Import.",
+            "Application/technical perspective: Review the Payables Open Interface Import report and request log; inspect rejected interface records and correct them using supported Payables windows or the source integration.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Payables Open Interface Import Troubleshooting — https://docs.oracle.com/cd/E26401_01/doc.122/e48760.pdf"
+    },
+    {
+        "ticket": "An invoice fails import because its invoice number appears to be duplicated.",
+        "Module": "accounts payable",
+        "Category": "Duplicate invoice number",
+        "Complexity": "medium",
+        "Root_Cause": "The invoice number may already exist for the supplier, or source data may have been resent.",
+        "Steps": [
+            "Possible cause: The invoice number may already exist for the supplier, or source data may have been resent.",
+            "Check existing invoices for the supplier and confirm whether the invoice is genuinely new or a duplicate submission.",
+            "Use the import rejection report and concurrent request log to identify the rejected record; correct the upstream source or interface data before rerunning import.",
+            "Functional perspective: Check existing invoices for the supplier and confirm whether the invoice is genuinely new or a duplicate submission.",
+            "Application/technical perspective: Use the import rejection report and concurrent request log to identify the rejected record; correct the upstream source or interface data before rerunning import.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Payables Open Interface Import Troubleshooting — https://docs.oracle.com/cd/E26401_01/doc.122/e48760.pdf"
+    },
+    {
+        "ticket": "An imported invoice is rejected because one or more distributions are invalid.",
+        "Module": "accounts payable",
+        "Category": "Invoice distribution rejected",
+        "Complexity": "high",
+        "Root_Cause": "The distribution set or line type may not meet Payables Open Interface requirements.",
+        "Steps": [
+            "Possible cause: The distribution set or line type may not meet Payables Open Interface requirements.",
+            "Verify the intended accounting distribution and confirm the invoice line and distribution data meet business rules.",
+            "Review the Payables Open Interface Import rejection report; inspect interface records and the concurrent request log to locate the rejected distribution.",
+            "Functional perspective: Verify the intended accounting distribution and confirm the invoice line and distribution data meet business rules.",
+            "Application/technical perspective: Review the Payables Open Interface Import rejection report; inspect interface records and the concurrent request log to locate the rejected distribution.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Payables Open Interface Import Troubleshooting — https://docs.oracle.com/cd/E26401_01/doc.122/e48760.pdf"
+    },
+    {
+        "ticket": "The Payables Open Interface Import concurrent request ends in Error or Warning and invoices are missing.",
+        "Module": "accounts payable",
+        "Category": "Payables import program failure",
+        "Complexity": "high",
+        "Root_Cause": "The request may have encountered program-level errors or invalid interface data.",
+        "Steps": [
+            "Possible cause: The request may have encountered program-level errors or invalid interface data.",
+            "Identify whether affected invoices were rejected individually or the import program itself failed; avoid resubmitting duplicates without checking results.",
+            "Open the Concurrent Requests window, review the request log and output, and follow the error details in Oracle's Payables Open Interface Import troubleshooting guidance.",
+            "Functional perspective: Identify whether affected invoices were rejected individually or the import program itself failed; avoid resubmitting duplicates without checking results.",
+            "Application/technical perspective: Open the Concurrent Requests window, review the request log and output, and follow the error details in Oracle's Payables Open Interface Import troubleshooting guidance.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Payables Open Interface Import Troubleshooting — https://docs.oracle.com/cd/E26401_01/doc.122/e48760.pdf"
+    },
+    {
+        "ticket": "Receivables transactions from an external system are not created after AutoInvoice runs.",
+        "Module": "accounts receivable",
+        "Category": "AutoInvoice import rejected",
+        "Complexity": "high",
+        "Root_Cause": "Transaction interface data may be incomplete, invalid, or inconsistent with Receivables setup.",
+        "Steps": [
+            "Possible cause: Transaction interface data may be incomplete, invalid, or inconsistent with Receivables setup.",
+            "Validate customer, transaction type, currency, dates, line and accounting attributes in the source transaction.",
+            "Review AutoInvoice execution output and interface exception details; correct rejected interface data and rerun the import using the supported process.",
+            "Functional perspective: Validate customer, transaction type, currency, dates, line and accounting attributes in the source transaction.",
+            "Application/technical perspective: Review AutoInvoice execution output and interface exception details; correct rejected interface data and rerun the import using the supported process.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle E-Business Suite Financials documentation — https://docs.oracle.com/cd/E26401_01/doc.122/e48755.pdf"
+    },
+    {
+        "ticket": "A transaction submitted by an upstream billing system is missing from Receivables.",
+        "Module": "accounts receivable",
+        "Category": "Customer transaction missing",
+        "Complexity": "medium",
+        "Root_Cause": "The source data may not have been transferred or selected by the import process.",
+        "Steps": [
+            "Possible cause: The source data may not have been transferred or selected by the import process.",
+            "Confirm the source transaction exists, belongs to the intended operating unit, and is eligible for import.",
+            "Check the relevant interface/import request and its output; confirm the records were loaded to the correct interface and selected by the request parameters.",
+            "Functional perspective: Confirm the source transaction exists, belongs to the intended operating unit, and is eligible for import.",
+            "Application/technical perspective: Check the relevant interface/import request and its output; confirm the records were loaded to the correct interface and selected by the request parameters.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle E-Business Suite Financials documentation — https://docs.oracle.com/cd/E26401_01/doc.122/e48755.pdf"
+    },
+    {
+        "ticket": "A customer receipt is recorded but does not reduce the open invoice balance.",
+        "Module": "accounts receivable",
+        "Category": "Receipt remains unapplied",
+        "Complexity": "medium",
+        "Root_Cause": "The receipt may be unapplied, on-account, or associated with a different transaction.",
+        "Steps": [
+            "Possible cause: The receipt may be unapplied, on-account, or associated with a different transaction.",
+            "Verify customer, remittance details, receipt amount, and target invoice before applying the receipt.",
+            "Review receipt application details and relevant Receivables reports/windows; confirm the receipt status and transaction identifiers.",
+            "Functional perspective: Verify customer, remittance details, receipt amount, and target invoice before applying the receipt.",
+            "Application/technical perspective: Review receipt application details and relevant Receivables reports/windows; confirm the receipt status and transaction identifiers.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle E-Business Suite Financials documentation — https://docs.oracle.com/cd/E26401_01/doc.122/e48755.pdf"
+    },
+    {
+        "ticket": "AutoInvoice rejects a transaction because a required transaction attribute or reference is invalid.",
+        "Module": "accounts receivable",
+        "Category": "AutoInvoice validation error",
+        "Complexity": "high",
+        "Root_Cause": "A required interface attribute or reference value may be missing or invalid for the configured setup.",
+        "Steps": [
+            "Possible cause: A required interface attribute or reference value may be missing or invalid for the configured setup.",
+            "Check the transaction source, transaction type, customer site, currency, dates, and line data against the business requirements.",
+            "Use the AutoInvoice execution report and interface exception details to identify the exact rejected field; correct the source/interface record before rerunning.",
+            "Functional perspective: Check the transaction source, transaction type, customer site, currency, dates, and line data against the business requirements.",
+            "Application/technical perspective: Use the AutoInvoice execution report and interface exception details to identify the exact rejected field; correct the source/interface record before rerunning.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle E-Business Suite Financials documentation — https://docs.oracle.com/cd/E26401_01/doc.122/e48755.pdf"
+    },
+    {
+        "ticket": "A purchase order remains in an in-process approval state and no expected approver has acted.",
+        "Module": "purchasing",
+        "Category": "Purchase order approval pending",
+        "Complexity": "high",
+        "Root_Cause": "The document may be waiting in the configured approval hierarchy or workflow notification queue.",
+        "Steps": [
+            "Possible cause: The document may be waiting in the configured approval hierarchy or workflow notification queue.",
+            "Review the document's approval status and determine the expected approver under the organization's approval policy.",
+            "Inspect the document approval history and workflow notification status; have the authorized workflow administrator investigate stuck or errored workflow activities.",
+            "Functional perspective: Review the document's approval status and determine the expected approver under the organization's approval policy.",
+            "Application/technical perspective: Inspect the document approval history and workflow notification status; have the authorized workflow administrator investigate stuck or errored workflow activities.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Purchasing User's Guide — Document Approval Process — https://docs.oracle.com/cd/E26401_01/doc.122/e48931/T446883T443951.htm"
+    },
+    {
+        "ticket": "A purchase order is routed to an unexpected approver.",
+        "Module": "purchasing",
+        "Category": "Approval hierarchy routes incorrectly",
+        "Complexity": "high",
+        "Root_Cause": "The configured employee/position hierarchy, document type, or approval setup may not match policy.",
+        "Steps": [
+            "Possible cause: The configured employee/position hierarchy, document type, or approval setup may not match policy.",
+            "Confirm the intended approval chain, amount thresholds, and document type with the procurement owner.",
+            "Review Purchasing approval setup and relevant workflow activity/history; changes to approval configuration should be performed by an authorized administrator.",
+            "Functional perspective: Confirm the intended approval chain, amount thresholds, and document type with the procurement owner.",
+            "Application/technical perspective: Review Purchasing approval setup and relevant workflow activity/history; changes to approval configuration should be performed by an authorized administrator.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Purchasing User's Guide — Document Approval Process — https://docs.oracle.com/cd/E26401_01/doc.122/e48931/T446883T443951.htm"
+    },
+    {
+        "ticket": "A requisition was submitted but has not progressed to the next approval step.",
+        "Module": "purchasing",
+        "Category": "Requisition not progressing",
+        "Complexity": "medium",
+        "Root_Cause": "A required approver response or workflow activity may be pending or in error.",
+        "Steps": [
+            "Possible cause: A required approver response or workflow activity may be pending or in error.",
+            "Check the requisition status and whether the expected approver has received and acted on the notification.",
+            "Review workflow notification and activity status, and inspect relevant Workflow Background Process requests if deferred or stuck activity is suspected.",
+            "Functional perspective: Check the requisition status and whether the expected approver has received and acted on the notification.",
+            "Application/technical perspective: Review workflow notification and activity status, and inspect relevant Workflow Background Process requests if deferred or stuck activity is suspected.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle E-Business Suite Maintenance Guide — Background Engines — https://docs.oracle.com/cd/E26401_01/doc.122/e22954/T202991T207026.htm"
+    },
+    {
+        "ticket": "A pre-approved purchase document is not appearing as supply in a planning or downstream process.",
+        "Module": "purchasing",
+        "Category": "Approved PO not visible as expected supply",
+        "Complexity": "medium",
+        "Root_Cause": "The document may be pre-approved rather than fully approved, or its status may not qualify as supply.",
+        "Steps": [
+            "Possible cause: The document may be pre-approved rather than fully approved, or its status may not qualify as supply.",
+            "Confirm the purchase document's approval and authorization status and the downstream process's supply eligibility rules.",
+            "Review document status in Purchasing and confirm the consuming planning process uses eligible document statuses; do not infer a data defect from visibility alone.",
+            "Functional perspective: Confirm the purchase document's approval and authorization status and the downstream process's supply eligibility rules.",
+            "Application/technical perspective: Review document status in Purchasing and confirm the consuming planning process uses eligible document statuses; do not infer a data defect from visibility alone.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Purchasing User's Guide — Document Approval Process — https://docs.oracle.com/cd/E26401_01/doc.122/e48931/T446883T443951.htm"
+    },
+    {
+        "ticket": "An inventory transaction fails with an invalid locator error.",
+        "Module": "inventory",
+        "Category": "Invalid locator transaction",
+        "Complexity": "medium",
+        "Root_Cause": "The locator may not be valid for the item, subinventory, organization, or transaction date.",
+        "Steps": [
+            "Possible cause: The locator may not be valid for the item, subinventory, organization, or transaction date.",
+            "Confirm the intended organization, subinventory, locator, item, and transaction quantity.",
+            "Inspect the transaction interface error details, correct the locator in the supported Inventory window, then resubmit the affected transaction.",
+            "Functional perspective: Confirm the intended organization, subinventory, locator, item, and transaction quantity.",
+            "Application/technical perspective: Inspect the transaction interface error details, correct the locator in the supported Inventory window, then resubmit the affected transaction.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Inventory User's Guide — Transaction Management — https://docs.oracle.com/cd/E26401_01/doc.122/e48820/T291651T671994.htm"
+    },
+    {
+        "ticket": "An imported inventory transaction remains in Error status and stock is not updated.",
+        "Module": "inventory",
+        "Category": "Transaction open interface error",
+        "Complexity": "high",
+        "Root_Cause": "Interface attributes or source data may be invalid or inconsistent with Inventory setup.",
+        "Steps": [
+            "Possible cause: Interface attributes or source data may be invalid or inconsistent with Inventory setup.",
+            "Verify item, organization, transaction type, source, subinventory, locator, lot/serial details, and quantity as applicable.",
+            "Use the Transaction Management Dashboard or Transaction Interface window to inspect the error code and explanation; correct the record and resubmit it.",
+            "Functional perspective: Verify item, organization, transaction type, source, subinventory, locator, lot/serial details, and quantity as applicable.",
+            "Application/technical perspective: Use the Transaction Management Dashboard or Transaction Interface window to inspect the error code and explanation; correct the record and resubmit it.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Inventory User's Guide — Transaction Management — https://docs.oracle.com/cd/E26401_01/doc.122/e48820/T291651T671994.htm"
+    },
+    {
+        "ticket": "A receipt is entered but the expected inventory movement or downstream availability has not occurred.",
+        "Module": "inventory",
+        "Category": "Receiving transaction pending",
+        "Complexity": "medium",
+        "Root_Cause": "Receiving interface processing may be pending or in error.",
+        "Steps": [
+            "Possible cause: Receiving interface processing may be pending or in error.",
+            "Confirm receipt status and whether the receiving transaction has completed the required steps for the business process.",
+            "Review Receiving Open Interface and pending transaction statuses, inspect errors, correct source data, and process the valid transaction through supported application actions.",
+            "Functional perspective: Confirm receipt status and whether the receiving transaction has completed the required steps for the business process.",
+            "Application/technical perspective: Review Receiving Open Interface and pending transaction statuses, inspect errors, correct source data, and process the valid transaction through supported application actions.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Inventory User's Guide — Transaction Management — https://docs.oracle.com/cd/E26401_01/doc.122/e48820/T291651T671994.htm"
+    },
+    {
+        "ticket": "Cycle count entries from an external process do not complete successfully.",
+        "Module": "inventory",
+        "Category": "Cycle count interface error",
+        "Complexity": "medium",
+        "Root_Cause": "Imported count entries may have invalid item, organization, subinventory, locator, or count data.",
+        "Steps": [
+            "Possible cause: Imported count entries may have invalid item, organization, subinventory, locator, or count data.",
+            "Verify the count entry against the approved count and item/location records.",
+            "Review cycle count interface status and error details; correct the underlying record and use the supported reprocess action.",
+            "Functional perspective: Verify the count entry against the approved count and item/location records.",
+            "Application/technical perspective: Review cycle count interface status and error details; correct the underlying record and use the supported reprocess action.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Inventory User's Guide — Transaction Management — https://docs.oracle.com/cd/E26401_01/doc.122/e48820/T291651T671994.htm"
+    },
+    {
+        "ticket": "A sales order line remains stuck at a fulfillment activity and does not progress.",
+        "Module": "order management",
+        "Category": "Sales order line workflow stuck",
+        "Complexity": "high",
+        "Root_Cause": "The workflow activity may be deferred, timed out, or in an error state.",
+        "Steps": [
+            "Possible cause: The workflow activity may be deferred, timed out, or in an error state.",
+            "Review the order and line status, identify the last completed business step, and confirm any required upstream action.",
+            "Inspect workflow status and error details; check whether the Workflow Background Process is scheduled and review relevant concurrent request logs with an authorized administrator.",
+            "Functional perspective: Review the order and line status, identify the last completed business step, and confirm any required upstream action.",
+            "Application/technical perspective: Inspect workflow status and error details; check whether the Workflow Background Process is scheduled and review relevant concurrent request logs with an authorized administrator.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Order Management — Using Oracle Workflow — https://docs.oracle.com/cd/E26401_01/doc.122/e48844/T393423T393427.htm"
+    },
+    {
+        "ticket": "A sales order line does not progress after a shipping or fulfillment event.",
+        "Module": "order management",
+        "Category": "Order line not progressing after shipping",
+        "Complexity": "high",
+        "Root_Cause": "The expected workflow event may not have been raised or a subsequent workflow activity may be stuck.",
+        "Steps": [
+            "Possible cause: The expected workflow event may not have been raised or a subsequent workflow activity may be stuck.",
+            "Confirm the shipping transaction completed and the order line has the expected status.",
+            "Review the order line workflow activity and relevant shipping/workflow logs; confirm background workflow processing and investigate the specific failed activity.",
+            "Functional perspective: Confirm the shipping transaction completed and the order line has the expected status.",
+            "Application/technical perspective: Review the order line workflow activity and relevant shipping/workflow logs; confirm background workflow processing and investigate the specific failed activity.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Order Management — Using Oracle Workflow — https://docs.oracle.com/cd/E26401_01/doc.122/e48844/T393423T393427.htm"
+    },
+    {
+        "ticket": "Deferred Order Management workflow activities remain pending for a long time.",
+        "Module": "order management",
+        "Category": "Workflow background process not completing deferred work",
+        "Complexity": "high",
+        "Root_Cause": "The Workflow Background Process may not be scheduled correctly or may be failing.",
+        "Steps": [
+            "Possible cause: The Workflow Background Process may not be scheduled correctly or may be failing.",
+            "Confirm the business transaction is eligible to progress and whether it is waiting on a notification or prerequisite.",
+            "Review concurrent request history and logs for Workflow Background Process; verify its schedule and parameters with the workflow administrator.",
+            "Functional perspective: Confirm the business transaction is eligible to progress and whether it is waiting on a notification or prerequisite.",
+            "Application/technical perspective: Review concurrent request history and logs for Workflow Background Process; verify its schedule and parameters with the workflow administrator.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle E-Business Suite Maintenance Guide — Background Engines — https://docs.oracle.com/cd/E26401_01/doc.122/e22954/T202991T207026.htm"
+    },
+    {
+        "ticket": "An order from an external system is not available for processing in Order Management.",
+        "Module": "order management",
+        "Category": "Order import/interface failure",
+        "Complexity": "high",
+        "Root_Cause": "The source data may not have been imported, or order interface validation may have rejected it.",
+        "Steps": [
+            "Possible cause: The source data may not have been imported, or order interface validation may have rejected it.",
+            "Verify source order number, customer, order type, item, quantities, shipping details, and operating unit context.",
+            "Inspect the relevant order import request output and interface errors; correct rejected data and rerun the supported import process.",
+            "Functional perspective: Verify source order number, customer, order type, item, quantities, shipping details, and operating unit context.",
+            "Application/technical perspective: Inspect the relevant order import request output and interface errors; correct rejected data and rerun the supported import process.",
+            "Triage question: What exact error message or request status is displayed?",
+            "Triage question: What transaction, document, or concurrent request ID is affected?",
+            "Triage question: Did the issue begin after a setup, data, integration, or deployment change?",
+            "Escalation guidance: Escalate business-rule, approval, accounting, or setup decisions to the functional owner. Escalate interface, concurrent-processing, workflow, access, or application errors to the EBS application/integration administrator. Provide the request ID, log/output, transaction identifier, timestamp, and steps already tried."
+        ],
+        "source": "Oracle Order Management — Using Oracle Workflow — https://docs.oracle.com/cd/E26401_01/doc.122/e48844/T393423T393427.htm"
+    }
+]

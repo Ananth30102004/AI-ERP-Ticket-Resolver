@@ -1,0 +1,423 @@
+[
+    {
+        "id": "OP(1",
+        "ticket": "AP invoice lines duplicates",
+        "Module": "Oracle Payables (AP)",
+        "Category": "Duplicate Invoice Lines",
+        "Complexity": "medium",
+        "Steps": [
+            "Check if the invoice was imported via the Payables Open Interface and verify if duplicate records exist in the interface lines table.",
+            "Determine if the invoice line was matched multiple times to the same Purchase Order or Receipt line.",
+            "Review recent manual invoice entries to rule out user error during line creation.",
+            "Inspect custom REST/SOAP integrations, extensions, or third-party software that automates invoice line creation.",
+            "Run the Invoice Validation process and check for holds or alerts related to duplicate matching or line allocation."
+        ]
+    },
+    {
+        "id": "OP2",
+        "ticket": "PO qty not matching with PR qty",
+        "Module": "Oracle Purchasing",
+        "Category": "Quantity Mismatch",
+        "Complexity": "medium",
+        "Steps": [
+            "Verify if manual modifications were made to the line quantity during the PO creation or AutoCreate process.",
+            "Check if the Purchase Requisition line was split or partially processed across multiple Purchase Orders.",
+            "Inspect the Unit of Measure (UOM) on both documents to check for UOM conversion adjustments.",
+            "Review the revision history for both the Purchase Requisition and Purchase Order to identify post-approval changes.",
+            "Examine purchasing profile options and buyer tolerances that permit modifying requisition quantities during PO creation."
+        ]
+    },
+    {
+        "id": "A3",
+        "ticket": "AP invoices amount not matching with the receipt amount",
+        "Module": "AP",
+        "Category": "Invoice Matching Discrepancy",
+        "Complexity": "medium",
+        "Steps": [
+            "Verify the purchase order unit price, receipt quantity, and billed quantity to identify specific variances.",
+            "Check for additional charges such as freight, tax, or miscellaneous charges applied on the invoice or receipt.",
+            "Review unit of measure (UOM) conversions between the purchase order, receipt, and invoice.",
+            "Inspect tolerance rules in Payables options to see if matching holds are placed on the invoice.",
+            "Verify if exchange rates or currency rounding differences exist between the receipt and invoice dates."
+        ]
+    },
+    {
+        "id": "AP4",
+        "ticket": "AP invoices amount not matching with the receipt amount",
+        "Module": "accounts payable",
+        "Category": "Invoice Matching Variance",
+        "Complexity": "medium",
+        "Steps": [
+            "Verify the receipt quantity and unit price in Purchasing to ensure the receipt was recorded accurately.",
+            "Check the invoice lines and distributions in Accounts Payable to identify discrepancies in unit price, quantity billed, or tax amounts.",
+            "Review tolerance limits set in Purchasing and Payables options to determine if the variance exceeds allowed thresholds.",
+            "Inspect invoice hold details in the Invoice Workbench to check for specific price or quantity holds.",
+            "Check for extra charges such as freight, tax, or exchange rate differences affecting the total matched amount."
+        ]
+    },
+    {
+        "id": "AP5",
+        "ticket": "Duplicate qty in the invoice lines",
+        "Module": "accounts payable",
+        "Category": "Invoice Line Quantity Issue",
+        "Complexity": "medium",
+        "Steps": [
+            "Possible cause: Invoice matching was performed multiple times against the same purchase order or receipt line.",
+            "Possible cause: Duplicated source data or interface import errors resulted in multiple line items carrying the same quantity.",
+            "Review the affected invoice lines and check the matching details against the purchase order or receipt distribution.",
+            "Verify whether the invoice was generated via an automated interface or manually created with duplicate line items.",
+            "Correct or unmatch the duplicate invoice lines if matched incorrectly, or update line quantities to reflect actual billed amounts.",
+            "Rerun invoice validation to ensure quantity holds or matching variances are cleared."
+        ]
+    },
+    {
+        "id": "AR6",
+        "ticket": "payment was applied to the wrong invoice in Oracle Receivables.",
+        "Module": "accounts receivable",
+        "Category": "Receipt applied to wrong invoice",
+        "Complexity": "high",
+        "Steps": [
+            "Possible cause: The receipt may have been applied to an incorrect transaction due to unverified remittance advice or customer details.",
+            "Review the receipt application details to identify the transaction currently linked to the receipt.",
+            "Confirm the correct customer, invoice number, currency, and amount using remittance documentation.",
+            "Unapply the receipt from the incorrect invoice following standard operating procedures to maintain audit trails.",
+            "Reapply the receipt to the correct invoice in Oracle Receivables.",
+            "Verify the resulting customer balances, transaction statuses, and accounting entries."
+        ]
+    },
+    {
+        "id": "PUR7",
+        "ticket": "A requisition is submitted, but the expected approver does not appear in the approval hierarchy",
+        "Module": "purchasing",
+        "Category": "Requisition approval routing",
+        "Complexity": "high",
+        "Steps": [
+            "Possible cause: Approval rules or approver hierarchy may not match the requisition attributes.",
+            "Possible cause: The procurement approval configuration may require a diagnostic review.",
+            "Review the requisition status and inspect the approval history to identify missing stages or rules.",
+            "Check if this routing issue is repeating for similar requisitions and resolve the underlying setup root cause to prevent future occurrences.",
+            "Run the Requisition Approval - Validate diagnostic test if authorized for your role.",
+            "Verify the approver hierarchy, thresholds, and conditions in Manage Purchasing Document Approvals with the procurement configuration owner."
+        ]
+    },
+    {
+        "id": "PUR8",
+        "ticket": "A requisition is submitted, but the expected approver does not appear in the approval hierarchy",
+        "Module": "purchasing",
+        "Category": "Requisition Approval Routing",
+        "Complexity": "high",
+        "Steps": [
+            "Possible cause: Approval rules or approver hierarchy setup may not match the submitted requisition attributes (e.g., amount, category, cost center).",
+            "Possible cause: Supervisor or position hierarchy data for the expected approver may be incomplete or inactive.",
+            "Review the requisition status and inspect the generated approval history.",
+            "Run the Requisition Approval - Validate diagnostic test if authorized for your role.",
+            "Verify the approver hierarchy and approval rule conditions with the procurement configuration administrator.",
+            "Confirm whether recent changes were made to the approval configuration or user assignments."
+        ]
+    },
+    {
+        "id": "AR9",
+        "ticket": "payment was applied to the wrong invoice in Oracle Receivables.",
+        "Module": "accounts receivable",
+        "Category": "Receipt applied to wrong invoice",
+        "Complexity": "high",
+        "Steps": [
+            "Possible cause: The receipt may have been applied to an incorrect transaction due to unverified invoice or customer details during application.",
+            "Review the receipt application details and identify the transaction currently linked to the receipt.",
+            "Confirm the correct customer, invoice number, currency, and amount against supporting remittance information.",
+            "Follow approved unapplication procedures to reverse the receipt application from the incorrect invoice.",
+            "Reapply the receipt to the correct invoice and verify resulting customer balances and accounting entries."
+        ]
+    },
+    {
+        "id": "INV10",
+        "ticket": "An inventory attribute transaction request is rejected, but the user does not know which line failed.",
+        "Module": "inventory",
+        "Category": "Inventory attribute transaction error",
+        "Complexity": "medium",
+        "Steps": [
+            "A specific transaction header or line may have failed processing due to invalid attributes or source data.",
+            "Capture the process header and line identifiers using supported diagnostic tools.",
+            "Review the associated transaction error code and explanation in the interface error details to identify the exact line that failed.",
+            "Verify attributes such as organization, subinventory, locator, lot, serial, and transaction quantity against required inventory business rules.",
+            "Correct the specific invalid attribute on the rejected line rather than resubmitting unchanged data, then resubmit the request."
+        ]
+    },
+    {
+        "id": "INV11",
+        "ticket": "An inventory attribute transaction request is rejected, but the user does not know which line failed.",
+        "Module": "inventory",
+        "Category": "Inventory attribute transaction error",
+        "Complexity": "medium",
+        "Steps": [
+            "Possible cause: A specific transaction header or line may have failed processing due to invalid attributes or source data.",
+            "Review diagnostic tools, pending transaction interface tables, or execution logs to identify the specific failed header and line numbers.",
+            "Inspect the associated transaction error code and explanation to determine which attribute (such as organization, subinventory, locator, lot, serial, or quantity) is invalid.",
+            "Correct the invalid attribute on the failed line rather than resubmitting unchanged data, then resubmit the request.",
+            "Since this issue has recurred in existing tickets, investigate the underlying root cause of incoming data errors and resolve it to prevent repetition of this issue."
+        ]
+    },
+    {
+        "id": "INV12",
+        "ticket": "An inventory attribute transaction request is rejected, but the user does not know which line failed.",
+        "Module": "inventory",
+        "Category": "Inventory attribute transaction error",
+        "Complexity": "medium",
+        "Steps": [
+            "Possible Cause: A specific transaction header or line may have failed processing due to invalid attributes or source data.",
+            "Possible Cause: Required attributes such as organization, subinventory, locator, lot, serial, or transaction quantity may fail validation against business rules.",
+            "Review diagnostic tools and pending transaction interface error logs (such as the INV_PROCESSING_ERRORS table) to capture the header and line identifiers.",
+            "Inspect the error code and explanation to identify the exact line and attribute that caused the failure.",
+            "Correct the specific invalid attribute on the rejected line rather than resubmitting unchanged data, then resubmit the request.",
+            "Since this issue is repeating, investigate the root cause of recurring invalid input data or integration mapping errors and resolve it to avoid repetition of the issues."
+        ]
+    },
+    {
+        "id": "AR13",
+        "ticket": "A customer says their payment was applied to the wrong invoice in Oracle Receivables",
+        "Module": "accounts receivable",
+        "Category": "Receipt applied to wrong invoice",
+        "Complexity": "medium",
+        "Steps": [
+            "Possible cause: The receipt may have been applied to an incorrect transaction due to unverified remittance advice or user entry error.",
+            "Since this issue is repeating across multiple tickets, investigate the underlying root cause (such as auto-cash rules, lockbox matching setups, or manual entry practices) and resolve it to prevent recurring errors.",
+            "Review the receipt application details in Oracle Receivables to identify the transaction currently linked to the receipt.",
+            "Confirm the correct customer, invoice number, currency, and amount against supporting remittance documentation.",
+            "Follow approved receipt unapplication procedures to reverse the receipt application from the incorrect invoice.",
+            "Reapply the receipt to the intended invoice in Oracle Receivables.",
+            "Verify the updated customer balances, transaction statuses, and associated accounting entries."
+        ]
+    },
+    {
+        "id": "PUR14",
+        "ticket": "Purchase approval got struck",
+        "Module": "purchasing",
+        "Category": "Purchase approval got struck",
+        "Complexity": "medium",
+        "Steps": [
+            "Review the purchase order's approval status and determine the expected approver based on the organization's approval policy.",
+            "Check if the purchase order is in a pending approval state and verify if any approval rules or stages are configured incorrectly.",
+            "Inspect the document's approval history and workflow notification status to identify if the approval process is stuck or errored.",
+            "Confirm whether the purchase order is pre-approved but not fully approved, or if its status does not qualify as supply.",
+            "Verify the document type and approval rules, including attributes such as amount, category, requester, and delivery details, to ensure they match the purchase order.",
+            "Check for any recent changes in setup, data, integration, or deployment that may have affected the approval process."
+        ]
+    },
+    {
+        "id": "PUR15",
+        "ticket": "Purchase approval got struck",
+        "Module": "purchasing",
+        "Category": "Purchase approval got struck",
+        "Complexity": "medium",
+        "Steps": [
+            "Review the purchase order's approval status and check if it is stuck or held.",
+            "Verify the approval rules and configuration to ensure they match the purchase order's attributes (e.g., amount, category, requester, cost center).",
+            "Check if the document is pre-approved but not fully approved, or if its status does not qualify as supply.",
+            "Inspect the workflow notification status and approval history to determine if the document is waiting in the approval queue or if there are any errors in the workflow.",
+            "Confirm the expected approver based on the organization's approval policy and check if the approver has acted.",
+            "If the issue persists, escalate to the procurement administrator for review of Manage Purchasing Document Approvals and relevant rules."
+        ]
+    },
+    {
+        "id": "INV16",
+        "ticket": "Invoice qty is not matching with purchase qty",
+        "Module": "inventory",
+        "Category": "Receipt quantity mismatch",
+        "Complexity": "medium",
+        "Steps": [
+            "Compare the invoice quantity with the recorded receipt and purchase order quantities.",
+            "Confirm the physical receipt with the receiving team.",
+            "Check if any goods have been received but not recorded in the system.",
+            "If the invoice quantity exceeds the recorded receipt quantity, correct the invoice or record the valid receipt, then rerun invoice validation."
+        ]
+    },
+    {
+        "id": "PUR17",
+        "ticket": "Purchase approval got struck",
+        "Module": "purchasing",
+        "Category": "Purchase approval got struck",
+        "Complexity": "medium",
+        "Steps": [
+            "Review the purchase order's approval status and determine the expected approver based on the organization's approval policy.",
+            "Check if the purchase order is in a pending approval state and verify if any approval rules or stages are configured incorrectly.",
+            "Inspect the document's approval history and workflow notification status to identify if the approval process is stuck or errored.",
+            "Confirm whether the purchase order is pre-approved but not fully approved, or if its status does not qualify as supply.",
+            "Check if the approval rules are evaluating the correct attributes (e.g., amount, category, requester, cost center, delivery details) and if they match the purchase order's content.",
+            "Verify the configuration of approval stages and rules in the 'Manage Purchasing Document Approvals' section.",
+            "If the issue persists, escalate to the procurement administrator or workflow administrator for further investigation."
+        ]
+    },
+    {
+        "id": "PUR18",
+        "ticket": "The supplier org id is not available while PO creation whereas it was available during requisition creation",
+        "Module": "purchasing",
+        "Category": "Purchase request not created",
+        "Complexity": "medium",
+        "Steps": [
+            "Verify that the required procurement setup, such as a blanket purchase agreement, is present.",
+            "Check if the upstream supply orchestration flow is functioning correctly.",
+            "Review the relevant supply orchestration or configured-item exception details.",
+            "Confirm that the required procurement agreement and sourcing setup exist.",
+            "Correct the setup or source-data issue and resubmit the flow using the documented process."
+        ]
+    },
+    {
+        "id": "PUR19",
+        "ticket": "The supplier org id is not available while PO creation whereas it was available during requisition creation",
+        "Module": "purchasing",
+        "Category": "Purchase request not created",
+        "Complexity": "medium",
+        "Steps": [
+            "Check if a blanket purchase agreement or required procurement setup exists for the supplier organization.",
+            "Verify that the upstream supply orchestration flow is functioning correctly.",
+            "Review the supply orchestration exceptions or import logs for any errors related to the supplier org ID.",
+            "Ensure the supplier and supplier site are valid and enabled for the relevant operating unit.",
+            "If the issue persists, escalate to the supply planning owner for configuration checks and updates."
+        ]
+    },
+    {
+        "id": "PUR20",
+        "ticket": "Users are unable to submit purchase orders for approval in Oracle EBS. When attempting to submit the PO, the application displays an error stating that no approver could be determined. This issue is affecting multiple users in the Purchasing department.",
+        "Module": "purchasing",
+        "Category": "Purchase order approval workflow",
+        "Complexity": "medium",
+        "Steps": [
+            "Verify that the purchase order is properly configured with the correct approval rules and stages.",
+            "Check if the approval rules are set to evaluate the correct attributes (e.g., amount, category, requester, cost center, delivery details).",
+            "Confirm that the approval stages and rules are correctly set up in the Purchasing module.",
+            "Review the purchase order's approval status and history to ensure it is not in a state that prevents approval (e.g., pre-approved but not fully approved).",
+            "Check if the document type and approval setup match the intended approval chain and rules.",
+            "If unsure, ask the procurement administrator to review the Manage Purchasing Document Approvals and relevant rules."
+        ]
+    },
+    {
+        "id": "AP21",
+        "ticket": "An accounts payable user is attempting to validate an invoice in Oracle EBS. The system displays an error indicating that the invoice has already been entered for the same supplier. However, the user confirms that this is a new invoice with a different invoice reference number. The issue is affecting multiple invoices from the same supplier.",
+        "Module": "accounts payable",
+        "Category": "Duplicate invoice number",
+        "Complexity": "medium",
+        "Steps": [
+            "Verify that the invoice number is unique for the supplier and not already in use.",
+            "Check the invoice history for the supplier to confirm if this invoice is a duplicate of an existing one.",
+            "Review the import rejection report and concurrent request log to identify if the invoice was previously rejected due to a duplicate number.",
+            "If the invoice is indeed a duplicate, correct the upstream source or interface data before rerunning the import.",
+            "If the issue is recurring, check for any configuration or setup changes that may have caused the duplicate invoice number issue."
+        ]
+    },
+    {
+        "id": "INV22",
+        "ticket": "An inventory user is attempting to perform a material subinventory transfer in Oracle EBS. The transaction fails with an error indicating that the destination subinventory is invalid for the selected organization. The destination subinventory exists and is visible to the user, but the transaction cannot be completed. Other users are experiencing the same issue.",
+        "Module": "inventory",
+        "Category": "Inventory transaction processing error",
+        "Complexity": "medium",
+        "Steps": [
+            "Verify that the destination subinventory is valid and accessible for the selected organization.",
+            "Check if the destination subinventory is correctly configured in the Inventory setup (e.g., subinventory, locator, organization).",
+            "Confirm that the transaction attributes (e.g., item, quantity, transaction type) are valid for the selected organization and subinventory.",
+            "Review the exact error message or hold reason displayed in the application to identify the specific validation failure.",
+            "If the error is related to a locator or item, ensure that the locator is valid for the item, subinventory, and organization.",
+            "Check if there are any recent changes to the organization, subinventory, or item that may have affected the validity of the destination subinventory."
+        ]
+    },
+    {
+        "id": "INV23",
+        "ticket": "An inventory user is attempting to perform a material subinventory transfer in Oracle EBS. The transaction fails with an error indicating that the destination subinventory is invalid for the selected organization. The destination subinventory exists and is visible to the user, but the transaction cannot be completed. Other users are experiencing the same issue.",
+        "Module": "inventory",
+        "Category": "Inventory transaction processing error",
+        "Complexity": "medium",
+        "Steps": [
+            "Verify that the destination subinventory exists and is correctly assigned to the selected organization.",
+            "Check the organization's inventory configuration to ensure the subinventory is valid and accessible.",
+            "Confirm that the subinventory is properly linked to the organization in the Inventory Setup module.",
+            "If the issue persists, check the transaction interface error details for more specific information about why the subinventory is invalid.",
+            "If the problem is isolated to a specific user, ensure that the user has the correct permissions and access to the subinventory and organization."
+        ]
+    },
+    {
+        "id": "AP24",
+        "ticket": "An accounts payable user is attempting to validate an invoice in Oracle EBS. The system displays an error indicating that the invoice has already been entered for the same supplier. However, the user confirms that this is a new invoice with a different invoice reference number. The issue is affecting multiple invoices from the same supplier.",
+        "Module": "accounts payable",
+        "Category": "Duplicate invoice number",
+        "Complexity": "medium",
+        "Root Cause": "The invoice number may already exist for the supplier, or source data may have been resent.",
+        "Steps": [
+            "Verify that the invoice number is unique for the supplier.",
+            "Check the existing invoices for the supplier to confirm if the invoice is a duplicate.",
+            "Review the import rejection report and concurrent request log to identify any rejected records related to this invoice.",
+            "If the invoice is a duplicate, correct the upstream source or interface data before rerunning the import."
+        ]
+    },
+    {
+        "id": "INV25",
+        "ticket": "An inventory user is attempting to perform a material subinventory transfer in Oracle EBS. The transaction fails with an error indicating that the destination subinventory is invalid for the selected organization. The destination subinventory exists and is visible to the user, but the transaction cannot be completed. Other users are experiencing the same issue.",
+        "Module": "inventory",
+        "Category": "Inventory transaction processing error",
+        "Complexity": "medium",
+        "Root Cause": "The destination subinventory is invalid for the selected organization, even though it appears valid in the system. This could be due to a configuration issue, such as the subinventory not being properly assigned to the organization, or a mismatch in the organization's settings.",
+        "Steps": [
+            "Verify that the destination subinventory exists and is correctly assigned to the selected organization.",
+            "Check the organization's inventory configuration to ensure the subinventory is valid and accessible.",
+            "Review the transaction interface error details to confirm if there is a specific error message or code related to the organization/subinventory combination.",
+            "If the issue persists, try resubmitting the transaction with the same data, ensuring that the organization and subinventory are correctly selected."
+        ]
+    },
+    {
+        "id": "OM26",
+        "ticket": "An Order Management user is attempting to book a sales order in Oracle EBS. The order passes initial entry validation, but booking fails with an error indicating that the item's shipping organization is invalid. The item is active and available in the inventory organization, and other sales orders containing the same item are being booked successfully. The issue occurs only for orders entered by a particular operating unit.",
+        "Module": "order management",
+        "Category": "Order booking failure",
+        "Complexity": "medium",
+        "Root Cause": "The issue occurs only for orders entered by a particular operating unit, indicating a configuration or context-specific problem. The item is active and available in the inventory organization, but the shipping organization is invalid for orders from this operating unit.",
+        "Steps": [
+            "Verify that the shipping organization for the item is correctly configured for the specific operating unit involved in the failed booking.",
+            "Check if the shipping organization is valid for all relevant operating units, including the one where the failure occurred.",
+            "Confirm that the operating unit context is properly set in the order entry process.",
+            "Review the order entry logs for any specific error messages or validation rules related to the operating unit and shipping organization."
+        ]
+    },
+    {
+        "id": "AR27",
+        "ticket": "An Accounts Receivable user is attempting to apply a customer receipt against an outstanding invoice in Oracle EBS. The receipt is successfully created and appears in the receipt workbench, but the application process fails with an error indicating that the invoice is not eligible for receipt application. The invoice is open and has an outstanding balance. Other invoices belonging to the same customer can be successfully applied.",
+        "Module": "accounts receivable",
+        "Category": "Receipt not eligible for application",
+        "Complexity": "medium",
+        "Root Cause": "The receipt is not eligible for application because the invoice is not properly matched or the system is preventing the application due to insufficient data or validation rules.",
+        "Steps": [
+            "Verify that the receipt is correctly linked to the correct invoice and customer.",
+            "Check if the invoice is open and has an outstanding balance.",
+            "Review the receipt application details to confirm the transaction identifier and status.",
+            "Ensure that the receipt is not already unapplied or on-account.",
+            "Check if the system is preventing the application due to validation rules or data inconsistencies."
+        ]
+    },
+    {
+        "id": "PUR28",
+        "ticket": "Purchase approval got struck",
+        "Module": "purchasing",
+        "Category": "Purchase order approval",
+        "Complexity": "medium",
+        "Root Cause": "The purchase approval got stuck due to mismatched approval rules or incorrect configuration in the approval hierarchy.",
+        "Steps": [
+            "Check the purchase order's approval status and expected approver based on the organization's approval policy.",
+            "Review the document type and approval rules configured in the 'Manage Purchasing Document Approvals' section.",
+            "Verify that the approval rules are correctly set to evaluate attributes such as amount, category, requester, and delivery details.",
+            "Confirm that the purchase order is fully approved and not in a pre-approved state.",
+            "If the issue persists, check the workflow notification status and ensure there are no stuck or errored workflow activities."
+        ]
+    },
+    {
+        "id": "AP29",
+        "ticket": "A supplier invoice has been entered in Oracle EBS Accounts Payable against an approved purchase order. However, during invoice validation, the system places the invoice on a Price Variance Hold.\n\nThe invoice amount is \u20b91,18,000, while the purchase order amount is \u20b91,00,000. The supplier claims that the additional amount is due to a recently agreed price revision, but the updated price is not reflected in the purchase order.\n\nThe AP team is unable to proceed with payment processing because the invoice remains on hold.",
+        "Module": "accounts payable",
+        "Category": "Invoice price variance",
+        "Complexity": "medium",
+        "Root Cause": "The invoice price differs from the purchase order schedule price. The updated price revision is not reflected in the purchase order.",
+        "Steps": [
+            "Verify that the purchase order contains the correct price revision that applies to the invoice.",
+            "Compare the invoice unit price with the purchase order schedule price to confirm the discrepancy.",
+            "Check the applicable price tolerance settings in Oracle EBS Payables to determine if a price variance is allowed.",
+            "If a price variance is permitted, proceed with invoice validation. If not, request an authorized correction to the purchase order or invoice.",
+            "Once the price is corrected, rerun the invoice validation to ensure the invoice is no longer on hold."
+        ]
+    }
+]

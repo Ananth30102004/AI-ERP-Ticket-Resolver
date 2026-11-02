@@ -1,0 +1,38 @@
+# ==========================================
+# Triagent - AI-Powered ERP Ticket Resolver
+# Python Dependencies
+# ==========================================
+
+# ------------------------------------------
+# 1. Web Application Interface
+# ------------------------------------------
+streamlit>=1.40,<2.0
+
+# ------------------------------------------
+# 2. LLM Integration
+# ------------------------------------------
+# Python client for communicating with Ollama
+ollama>=0.4,<1.0
+
+# ------------------------------------------
+# 3. Embedding Generation
+# ------------------------------------------
+# Local sentence embedding models
+sentence-transformers>=3.0,<6.0
+
+# ------------------------------------------
+# 4. Vector Database
+# ------------------------------------------
+# Persistent vector storage and similarity search
+chromadb>=0.5,<2.0
+
+# ------------------------------------------
+# 5. Data Validation
+# ------------------------------------------
+# Structured LLM response validation (Pydantic v2)
+pydantic>=2.0,<3.0
+
+# ------------------------------------------
+# 6. Environment Configuration
+# ------------------------------------------
+python-dotenv>=1.0,<2.0
