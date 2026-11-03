@@ -125,20 +125,6 @@ The structured response includes:
 
 This provides a consistent response format and helps ensure that the generated output follows the application's expected structure.
 
-## Testing and Evaluation
-
-The application was manually evaluated using **30 representative Oracle ERP support scenarios**.
-
-Testing focused on:
-
-- ERP module and issue identification.
-- Relevance of retrieved knowledge.
-- Root cause identification.
-- Quality and sequence of troubleshooting recommendations.
-- Structured output validation.
-
-The evaluation was qualitative and intended to assess application behaviour across representative support scenarios. It is not a formal production accuracy benchmark.
-
 ## Engineering Decision: Gemini to Ollama
 
 The initial implementation used the Google Gemini API for LLM inference and embedding generation.
@@ -251,7 +237,17 @@ streamlit run app.py
 
 ## 📊 Model Evaluation Results
 
-Triagent was evaluated against 30 representative Oracle ERP support scenarios to assess root-cause identification and troubleshooting quality.
+The application was manually evaluated using **30 representative Oracle ERP support scenarios**.
+
+Testing focused on:
+
+- ERP module and issue identification.
+- Relevance of retrieved knowledge.
+- Root cause identification.
+- Quality and sequence of troubleshooting recommendations.
+- Structured output validation.
+
+The evaluation was qualitative and intended to assess application behaviour across representative support scenarios. It is not a formal production accuracy benchmark.
 
 | Evaluation Category | Number of Scenarios |
 |---|---:|
