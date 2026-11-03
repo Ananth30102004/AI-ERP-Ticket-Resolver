@@ -249,6 +249,19 @@ streamlit run app.py
 | Application Development | Built an interactive Streamlit interface                |
 | Data Persistence        | Implemented JSON-based ticket memory                    |
 
+## 📊 Model Evaluation Results
+
+Triagent was evaluated against 30 representative Oracle ERP support scenarios to assess root-cause identification and troubleshooting quality.
+
+| Evaluation Category | Number of Scenarios |
+|---|---:|
+| Correct | 16 |
+| Partially Correct | 10 |
+| Incorrect | 4 |
+| **Total Evaluated** | **30** |
+
+The evaluation demonstrated that Triagent could generate relevant diagnoses across multiple Oracle ERP modules. Testing also highlighted opportunities to improve root-cause identification, retrieval relevance, and the completeness of troubleshooting recommendations.
+
 ## Project Takeaway
 
 Triagent demonstrates the practical implementation of Generative AI concepts in an enterprise support use case. It combines custom RAG, semantic retrieval, local LLM inference, tool-assisted investigation, structured output validation, and application development into a single working application.
