@@ -204,6 +204,34 @@ Ensure that Ollama is running.
 streamlit run app.py
 ```
 
+## 📊 Model Evaluation Results
+
+The application was manually evaluated using **30 representative Oracle ERP support scenarios**.
+
+Testing focused on:
+
+- ERP module and issue identification.
+- Relevance of retrieved knowledge.
+- Root cause identification.
+- Quality and sequence of troubleshooting recommendations.
+- Structured output validation.
+
+The evaluation was qualitative and intended to assess application behaviour across representative support scenarios. It is not a formal production accuracy benchmark.
+
+**Evaluation Criteria:**
+- **Correct:** The generated diagnosis accurately identifies the root cause and provides relevant troubleshooting steps.
+- **Partially Correct:** The diagnosis identifies the general issue or suggests relevant troubleshooting steps, but misses the exact root cause, includes incomplete or less accurate recommendations, or requires manual refinement.
+- **Incorrect:** The diagnosis fails to identify the issue correctly or provides irrelevant or misleading troubleshooting recommendations.
+
+| Evaluation Category | Number of Scenarios |
+|---|---:|
+| Correct | 16 |
+| Partially Correct | 10 |
+| Incorrect | 4 |
+| **Total Evaluated** | **30** |
+
+The evaluation demonstrated that Triagent could generate relevant diagnoses across multiple Oracle ERP modules. Testing also highlighted opportunities to improve root-cause identification, retrieval relevance, and the completeness of troubleshooting recommendations.
+
 ## Current Limitations
 
 - Does not connect to a live Oracle EBS or Oracle Fusion instance.
@@ -234,29 +262,6 @@ streamlit run app.py
 | Data Validation         | Used Pydantic for structured LLM responses              |
 | Application Development | Built an interactive Streamlit interface                |
 | Data Persistence        | Implemented JSON-based ticket memory                    |
-
-## 📊 Model Evaluation Results
-
-The application was manually evaluated using **30 representative Oracle ERP support scenarios**.
-
-Testing focused on:
-
-- ERP module and issue identification.
-- Relevance of retrieved knowledge.
-- Root cause identification.
-- Quality and sequence of troubleshooting recommendations.
-- Structured output validation.
-
-The evaluation was qualitative and intended to assess application behaviour across representative support scenarios. It is not a formal production accuracy benchmark.
-
-| Evaluation Category | Number of Scenarios |
-|---|---:|
-| Correct | 16 |
-| Partially Correct | 10 |
-| Incorrect | 4 |
-| **Total Evaluated** | **30** |
-
-The evaluation demonstrated that Triagent could generate relevant diagnoses across multiple Oracle ERP modules. Testing also highlighted opportunities to improve root-cause identification, retrieval relevance, and the completeness of troubleshooting recommendations.
 
 ## Project Takeaway
 
