@@ -232,6 +232,17 @@ The evaluation was qualitative and intended to assess application behaviour acro
 
 The evaluation demonstrated that Triagent could generate relevant diagnoses across multiple Oracle ERP modules. Testing also highlighted opportunities to improve root-cause identification, retrieval relevance, and the completeness of troubleshooting recommendations.
 
+### Areas Where the Model Faced Challenges
+
+In some test scenarios, Triagent struggled to identify the exact root cause or generate sufficiently accurate troubleshooting recommendations. The main failure cases highlighted the following limitations:
+
+- **Incorrect Root Cause Identification:** The model sometimes identified a related issue rather than the actual underlying cause of the reported ERP problem.
+- **Incomplete Troubleshooting Steps:** Some responses contained relevant suggestions but did not provide all the necessary steps to resolve the issue.
+- **Retrieval Relevance:** Retrieved knowledge-base tickets were not always sufficiently relevant to the input scenario, which affected the quality of the generated diagnosis.
+- **Context Understanding:** The model occasionally struggled with complex or module-specific ERP scenarios, leading to inaccurate recommendations.
+
+These cases highlighted the importance of improving retrieval relevance, expanding the ERP knowledge base, and refining prompts and validation mechanisms. The generated recommendations should therefore be treated as decision-support suggestions and verified by an ERP support professional.
+
 ## Current Limitations
 
 - Does not connect to a live Oracle EBS or Oracle Fusion instance.
