@@ -1,3 +1,5 @@
+
+
 # Triagent – AI-Powered ERP Ticket Resolution System
 
 **An end-to-end Generative AI application combining custom RAG, semantic search, tool-assisted investigation, and local LLM inference to analyse and troubleshoot Oracle ERP support tickets.**
@@ -5,6 +7,8 @@
 Triagent is an AI-powered support assistant that analyses ERP issues, retrieves relevant historical tickets, identifies potential root causes, and generates structured troubleshooting recommendations.
 
 The application combines Python-based AI development with practical ERP support knowledge to demonstrate how Large Language Models and Retrieval-Augmented Generation can be applied to enterprise support workflows.
+
+click here to watch the demo : https://youtu.be/xktC13KtVuc
 
 ## Key Features
 
